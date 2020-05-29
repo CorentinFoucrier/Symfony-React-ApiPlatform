@@ -1,0 +1,18 @@
+version: "3.1"
+
+services:
+    symreact.db:
+        container_name: "symreact.db"
+        image: mariadb
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 3306:3306
+
+    symreact.adminer:
+        container_name: "symreact.adminer"
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
