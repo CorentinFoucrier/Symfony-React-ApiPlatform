@@ -7,9 +7,9 @@ use App\Entity\Invoice;
 use App\Entity\Customer;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 
 /**
@@ -20,9 +20,9 @@ class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryIt
 {
     private Security $security;
 
-    private AuthorizationChecker $auth;
+    private AuthorizationCheckerInterface $auth;
 
-    public function __construct(Security $security, AuthorizationChecker $authorizationChecker)
+    public function __construct(Security $security, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->security = $security;
         $this->auth = $authorizationChecker;
