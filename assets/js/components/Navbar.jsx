@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NavLink, withRouter } from "react-router-dom";
+import AuthAPI from "../api/AuthAPI";
+import AuthContext from "../contexts/AuthContext";
 
-const Navbar = (props) => {
+const Navbar = ({ history }) => {
+    const { isAuth, setIsAuth } = useContext(AuthContext);
+
+    const handleLogout = async () => {
+        try {
+            await AuthAPI.logout();
+            setIsAuth(false);
+            history.push("/");
+        } catch (error) {
+            setIsAuth(true);
+        }
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand" href="#">
+            <NavLink className="navbar-brand" to="/">
                 SymReact
-            </a>
+            </NavLink>
             <button
                 className="navbar-toggler"
                 type="button"
@@ -21,36 +36,49 @@ const Navbar = (props) => {
             <div className="collapse navbar-collapse" id="navbarColor01">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <NavLink className="nav-link" to="/customers">
                             Clients
-                        </a>
+                        </NavLink>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#">
+                        <NavLink className="nav-link" to="/invoices">
                             Factures
-                        </a>
+                        </NavLink>
                     </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                        <a href="#" className="nav-link">
-                            Incription
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="#" className="btn btn-success">
-                            Connexion
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="#" className="btn btn-danger">
-                            Deconnexion
-                        </a>
-                    </li>
+                    {(!isAuth && (
+                        <>
+                            <li className="nav-item">
+                                <a href="#" className="nav-link">
+                                    Incription
+                                </a>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink
+                                    to="/login"
+                                    className="btn btn-success"
+                                >
+                                    Connexion
+                                </NavLink>
+                            </li>
+                        </>
+                    )) || (
+                        <li className="nav-item">
+                            <button
+                                onClick={handleLogout}
+                                className="btn btn-danger"
+                            >
+                                Deconnexion
+                            </button>
+                        </li>
+                    )}
                 </ul>
             </div>
         </nav>
     );
 };
 
-export default Navbar;
+const NavbarWithRouter = withRouter(Navbar);
+
+export default NavbarWithRouter;

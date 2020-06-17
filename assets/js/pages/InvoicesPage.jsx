@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
-import InvoicesAPI from "../services/InvoicesAPI";
+import InvoicesAPI from "../api/InvoicesAPI";
 
 const STATUS = {
     PAID: {

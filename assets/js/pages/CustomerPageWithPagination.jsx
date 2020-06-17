@@ -24,7 +24,7 @@ const CustomerPageWithPagination = (props) => {
     useEffect(() => {
         axios
             .get(
-                `http://localhost:8000/api/customers?pagination=true&count=${itemsPerPage}&page=${currentPage}`
+                `https://localhost:8000/api/customers?pagination=true&count=${itemsPerPage}&page=${currentPage}`
             )
             .then((response) => {
                 setCustomers(response.data["hydra:member"]);
@@ -43,7 +43,7 @@ const CustomerPageWithPagination = (props) => {
         const originalCustomer = [...customers]; // copie de customers[]
         setCustomers(customers.filter((customer) => customer.id !== id));
         return axios
-            .delete("http://localhost:8000/api/customers/" + id)
+            .delete("https://localhost:8000/api/customers/" + id)
             .then((response) => console.log("ok"))
             .catch((error) => {
                 console.error(error.response);

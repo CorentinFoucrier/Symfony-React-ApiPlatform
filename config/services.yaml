@@ -27,10 +27,18 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Serializer\PatchedDateTimeNormalizer:
         tags: ["serializer.normalize"]
+
     App\EventListener\JWTCreatedListener:
         tags:
-            - {
-                  name: kernel.event_listener,
-                  event: lexik_jwt_authentication.on_jwt_created,
-                  method: onJWTCreated,
-              }
+            token:
+                name: kernel.event_listener
+                event: lexik_jwt_authentication.on_jwt_created
+                method: onJWTCreated
+
+    App\EventListener\JWTAuthenticationSuccessListener:
+        arguments: ["%lexik_jwt_authentication.token_ttl%"]
+        tags:
+            token:
+                name: kernel.event_listener
+                event: lexik_jwt_authentication.on_authentication_success
+                method: onAuthenticationSuccess

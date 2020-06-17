@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
-import CustomersApi from "../services/CustomersAPI";
+import CustomersApi from "../api/CustomersAPI";
 
 const CustomerPage = (props) => {
     const [customers, setCustomers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
 
-    const fetchCustomer = async () => {
-        try {
-            const data = await CustomersApi.findAll();
-            setCustomers(data);
-        } catch (error) {
-            console.error(error.response);
-        }
-    };
     // Au chargement vas chercher les Customers
     useEffect(() => {
+        const fetchCustomer = async () => {
+            try {
+                const data = await CustomersApi.findAll();
+                setCustomers(data);
+            } catch (error) {
+                console.error(error.response);
+            }
+        };
         fetchCustomer();
     }, []);
 
