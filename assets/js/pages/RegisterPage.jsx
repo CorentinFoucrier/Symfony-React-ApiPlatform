@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import UsersAPI from "../api/UsersAPI";
 import Field from "../components/forms/Field";
 
@@ -22,10 +23,10 @@ const RegisterPage = (props) => {
         event.preventDefault();
         try {
             await UsersAPI.register(user);
+            toast.success("Incription réussi, vous pouvez vous connecter.");
             props.history.replace("/login");
         } catch ({ response }) {
             const { violations } = response.data;
-            console.error(violations);
             if (violations) {
                 const APIErrors = {};
                 // Stockage des erreurs API dans APIErrors comme -> {propertyPath: "message"}

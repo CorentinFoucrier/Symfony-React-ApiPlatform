@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Route, Switch } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../css/app.css";
 import AuthAPI from "./api/AuthAPI";
 import Loading from "./components/Loading";
@@ -53,9 +55,12 @@ const Root = () => {
     // Au premier rendu isAuth est "undefine" alors on afficher un écran de chargement après le useEffect on affiche l'app
     // Ceci pour éviter d'avoir un bref affichage en mode "non connecter" puis de recevoir la réponse de l'API que l'on est connecté
     return (
-        <HashRouter>
-            {typeof isAuth === "boolean" ? <App /> : <Loading />}
-        </HashRouter>
+        <>
+            <ToastContainer position={toast.POSITION.BOTTOM_LEFT} />
+            <HashRouter>
+                {typeof isAuth === "boolean" ? <App /> : <Loading />}
+            </HashRouter>
+        </>
     );
 };
 
