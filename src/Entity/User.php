@@ -32,8 +32,8 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"users_read" ,"customers_read", "invoices_read", "invoices_subresource"})
-     * @Assert\NotBlank
-     * @Assert\Email
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\Email(message="Vous devez entrer un email valide.")
      */
     private $email;
 
@@ -45,23 +45,44 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
      */
     private $password;
 
     /**
+     * @var string The hashed password
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\IdenticalTo(propertyPath="password", message="La confirmation du mot de passe n'est pas valide")
+     */
+    private $confirmPassword;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read" ,"customers_read", "invoices_read", "invoices_subresource"})
-     * @Assert\NotBlank
-     * @Assert\Length(min=2, max=255)
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\Length(
+     *      min=2,
+     *      max=255,
+     *      minMessage="Votre prénom dois contenir plus de 2 caractères.",
+     *      maxMessage="Votre prénom ne dois pas dépasser 255 caractères.",
+     *      allowEmptyString=true
+     *  )
+     * @Assert\Type(type={"string", "alpha"}, message="Votre prénom ne peux contenir que des lettres.")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"users_read" ,"customers_read", "invoices_read", "invoices_subresource"})
-     * @Assert\NotBlank
-     * @Assert\Length(min=2, max=255)
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\Length(
+     *      min=2,
+     *      max=255,
+     *      minMessage="Votre nom dois contenir plus de 2 caractères.",
+     *      maxMessage="Votre nom ne dois pas dépasser 255 caractères.",
+     *      allowEmptyString=true
+     *  )
+     * @Assert\Type(type={"string", "alpha"}, message="Votre nom ne peux contenir que des lettres.")
      */
     private $lastName;
 
@@ -132,6 +153,21 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getConfirmPassword(): string
+    {
+        return (string) $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
 
         return $this;
     }

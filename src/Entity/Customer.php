@@ -35,27 +35,38 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read", "invoices_read"})
-     * @Assert\NotBlank
-     * @Assert\Length(min=3, max=255)
-     * @Assert\Type(type={"string", "alpha"})
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\Length(
+     *      min=2,
+     *      max=255,
+     *      minMessage="Votre prénom dois contenir plus de 2 caractères.",
+     *      maxMessage="Votre prénom ne dois pas dépasser 255 caractères.",
+     *      allowEmptyString=true
+     *  )
+     * @Assert\Type(type={"string", "alpha"}, message="Votre prénom ne peux contenir que des lettres.")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read", "invoices_read"})
-     * @Assert\NotBlank
-     * @Assert\Length(min=3, max=255)
-     * @Assert\Type(type={"string", "alpha"})
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\Length(
+     *      min=2,
+     *      max=255,
+     *      minMessage="Votre nom dois contenir plus de 2 caractères.",
+     *      maxMessage="Votre nom ne dois pas dépasser 255 caractères.",
+     *      allowEmptyString=true
+     *  )
+     * @Assert\Type(type={"string", "alpha"}, message="Votre nom ne peux contenir que des lettres.")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read", "invoices_read"})
-     * @Assert\NotBlank
-     * @Assert\Length(min=3, max=255)
-     * @Assert\Email
+     * @Assert\NotBlank(message="Le champs ne peux pas être vide!")
+     * @Assert\Email(message="Vous devez entrer un email valide !")
      */
     private $email;
 

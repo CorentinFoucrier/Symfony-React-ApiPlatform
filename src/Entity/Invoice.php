@@ -39,8 +39,7 @@ class Invoice
     /**
      * @ORM\Column(type="float")
      * @Groups({"invoices_read", "customers_read", "invoices_subresource"})
-     * @Assert\NotBlank
-     * @Assert\Type("numeric")
+     * @Assert\NotBlank(message="Le montant ne peux pas être vide !")
      */
     private $amount;
 
@@ -55,8 +54,10 @@ class Invoice
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"invoices_read", "customers_read", "invoices_subresource"})
-     * @Assert\NotBlank
-     * @Assert\Choice({"SENT", "PAID", "CANCELLED"})
+     * @Assert\Choice(
+     *      {"SEND", "PAID", "CANCELLED"},
+     *      message="Vous devez choisir un status parmi la liste."
+     * )
      */
     private $status;
 
@@ -64,7 +65,7 @@ class Invoice
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="invoices")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"invoices_read"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Vous devez selectionner un client.")
      */
     private $customer;
 

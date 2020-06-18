@@ -24,7 +24,7 @@ class InvoiceChronoSubcriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        // An Invoice need a Chrone, give it one automaticaly before data validation (i.e. Symfony validation component)
+        // An Invoice need a Chrono, give it one automaticaly before data validation (i.e. Symfony validation component)
         return [
             KernelEvents::VIEW => ["setChronoForInvoice", EventPriorities::PRE_VALIDATE]
         ];

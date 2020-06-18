@@ -8,9 +8,12 @@ import NavbarWithRouter from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthContext from "./contexts/AuthContext";
 import CustomerPage from "./pages/CustomerPage";
+import CustomersPage from "./pages/CustomersPage";
 import HomePage from "./pages/HomePage";
+import InvoicePage from "./pages/InvoicePage";
 import InvoicesPage from "./pages/InvoicesPage";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 const Root = () => {
     const [isAuth, setIsAuth] = useState();
@@ -29,9 +32,18 @@ const Root = () => {
             <NavbarWithRouter />
             <main className="container pt-5">
                 <Switch>
+                    <Route path="/register" component={RegisterPage} />
                     <Route path="/login" component={LoginPage} />
+                    <PrivateRoute
+                        path="/invoices/:id"
+                        component={InvoicePage}
+                    />
                     <PrivateRoute path="/invoices" component={InvoicesPage} />
-                    <PrivateRoute path="/customers" component={CustomerPage} />
+                    <PrivateRoute
+                        path="/customers/:id"
+                        component={CustomerPage}
+                    />
+                    <PrivateRoute path="/customers" component={CustomersPage} />
                     <Route path="/" component={HomePage} />
                 </Switch>
             </main>
